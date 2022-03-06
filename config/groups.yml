@@ -1,0 +1,23 @@
+- frac-分数:
+   - base-分数
+   - common-常用分数
+- supsub-上下标:
+   - base-上标和下标
+   - common-常用的上标和下标
+- sqrt-根式:
+   - base-根式
+   - common-常用根式
+- int-积分:
+   - base-积分
+- big-大型运算符:
+   - sum-求和
+- brackets-括号:
+   - square-方括号
+- func-函数:
+   - triangle-三角函数
+- lim-极限和对数:
+   - func-函数
+   - common-常用函数
+- matrix-矩阵:
+   - blank-空矩阵
+   - dot-点

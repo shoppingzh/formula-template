@@ -1,0 +1,19 @@
+{
+  "name": "formula-template",
+  "version": "0.0.1",
+  "main": "index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node ./index.js"
+  },
+  "repository": "git@github.com:shoppingzh/formula-template.git",
+  "author": "shoppingzh <1049262057@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "mathjax": "^3.2.0",
+    "spritesmith": "^3.4.0"
+  }
+}

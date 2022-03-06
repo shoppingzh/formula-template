@@ -1,0 +1,6 @@
+{
+  "1": "\\frac{dy}{dx}",
+  "2": "\\frac{ \\Delta y}{ \\Delta x}",
+  "3": "\\frac{\\partial y}{\\partial x}",
+  "4": "\\frac{\\delta y}{\\delta x}"
+}
