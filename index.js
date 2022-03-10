@@ -55,11 +55,6 @@ function fillConfig() {
 fillConfig()
 
 function createDist(image) {
-  // if (existsSync(DIST_PATH)) {
-  //   rmSync(DIST_PATH, { recursive: true })
-  // }
-  // mkdirSync(DIST_PATH)
-
   if (!existsSync(DIST_PATH)) {
     mkdirSync(DIST_PATH)  
   }

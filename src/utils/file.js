@@ -1,4 +1,4 @@
-const { readdirSync, readFileSync } = require('fs')
+const { readdirSync, readFileSync, rmSync } = require('fs')
 const { join } = require('path')
 
 function readFiles(path) {
@@ -14,7 +14,14 @@ function readLines(path, filterBlankLines = false) {
   return lines
 }
 
+function rmdirFiles(path) {
+  readdirSync(path).forEach(o => {
+    rmSync(join(path, o), { recursive: true, force: true })
+  })
+}
+
 module.exports = {
   readFiles,
-  readLines
+  readLines,
+  rmdirFiles
 }
