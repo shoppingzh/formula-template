@@ -1,5 +1,7 @@
-const groups = require('./groups.js')
+const groups = require('./groups/index')
+const symbols = require('./symbols/index')
 
 module.exports = {
-  groups
+  groups,
+  symbols
 }
