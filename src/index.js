@@ -1,14 +1,13 @@
 const { groups, pathImageMap: groupsPathImageMap } = require('./config/groups')
 const symbols = require('./config/symbols')
-const { writeFileSync, rmSync, existsSync, mkdirSync } = require('fs')
+const { writeFileSync, existsSync, mkdirSync } = require('fs')
 const { resolve, join } = require('path')
-const { rmdirFiles, readFiles } = require('./utils/file')
-const Spritesmith = require('spritesmith')
-const { createFormulaImage } = require('./utils/common')
+const { rmdirFiles } = require('./utils/file')
+const { createFormulaImage, cloneUseful } = require('./utils/common')
+const Vinyl = require('vinyl')
+const { createSprite } = require('./utils/image')
 
 const DIST_PATH = resolve(__dirname, '../dist')
-const TEMP_PATH = resolve(__dirname, DIST_PATH, '.tmp')
-let image = null
 
 async function init() {
   if (existsSync(DIST_PATH)) {
@@ -16,57 +15,58 @@ async function init() {
   } else {
     mkdirSync(DIST_PATH)
   }
-  mkdirSync(TEMP_PATH)
 
   // 符号
-  const symbolsPathElementMap = {}
+  const symbolElementMap = {}
   for (const symbol of symbols) {
     const elements = symbol.elements || []
     for (let i = 0, len = elements.length; i < len; i++) {
       const el = elements[i]
-      const filepath = join(TEMP_PATH, `${i + 1}.png`)
-      symbolsPathElementMap[filepath] = el
-      await createFormulaImage(el.exp, 40, 40, filepath)
+      el.__data = await createFormulaImage(el.exp, 40, 40)
+      el.__imageVitualName = `${el.exp}.png`
+      symbolElementMap[el.__imageVitualName] = el
     }
   }
 
   await Promise.all([new Promise(async(resolve, reject) => {
-    const files = readFiles(TEMP_PATH)
-    Spritesmith.run({
-      src: files.map(f => `${join(TEMP_PATH, f.name)}`)
-    }, (err, result) => {
-      if (err) return reject(err)
+    try {
+      const result = await createSprite(Object.keys(symbolElementMap).map(o => (new Vinyl({
+        path: symbolElementMap[o].__imageVitualName,
+        contents: symbolElementMap[o].__data
+      }))))
+
       writeFileSync(join(DIST_PATH, 'symbols.png'), result.image)
-  
       Object.keys(result.coordinates).forEach(path => {
-        symbolsPathElementMap[path].image = {
+        symbolElementMap[path].image = {
           position: result.coordinates[path]
         }
       })
   
-      rmSync(TEMP_PATH, { recursive: true, force: true })
-
       resolve()
-    })
+    } catch (err) {
+      reject(err)
+    }
   }), new Promise(async(resolve, reject) => {
-    Spritesmith.run({
-      src: Object.keys(groupsPathImageMap)
-    }, (err, result) => {
-      if (err) return reject(err)
-      writeFileSync(join(DIST_PATH, 'groups.png'), result.image)
+    try {
+      const result = await createSprite(Object.keys(groupsPathImageMap))
 
+      writeFileSync(join(DIST_PATH, 'groups.png'), result.image)
       Object.keys(result.coordinates).forEach(path => {
         groupsPathImageMap[path].position = result.coordinates[path]
       })
 
       resolve()
-    })
+    } catch (err) {
+      reject(err)
+    }
   })])
 
-  writeFileSync(join(DIST_PATH, 'config.json'), JSON.stringify({
+  const conf = cloneUseful({
     symbols,
     groups
-  }, null, 4))
+  })
+
+  writeFileSync(join(DIST_PATH, 'config.json'), JSON.stringify(conf, null, 2))
   console.log('done')
 }
 

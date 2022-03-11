@@ -1,8 +1,8 @@
+const { cloneDeepWith, mergeWith, pick, pickBy, isPlainObject } = require('lodash')
 const sharp = require('sharp')
 const { svg } = require('./formula')
-const { writeFileSync } = require('fs')
 
-function createFormulaImage(exp, width, height, path) {
+function createFormulaImage(exp, width, height) {
   return new Promise(async(resolve, reject) => {
     try {
       const text = await svg(exp)
@@ -11,7 +11,7 @@ function createFormulaImage(exp, width, height, path) {
           width,
           height,
           channels: 3,
-          background: { r: 255, g: 255, b: 255 }
+          background: { r: 0, g: 0, b: 0 }
         }
       }).composite([{
         input: Buffer.from(text),
@@ -19,14 +19,26 @@ function createFormulaImage(exp, width, height, path) {
       }])
       .png()
       .toBuffer()
-      writeFileSync(path, buffer)
-      resolve()
+      resolve(buffer)
     } catch (err) {
       reject(err)
     }
   })
 }
 
+function cloneUseful(o) {
+  return cloneDeepWith(o, (value, key, object, stack) => {
+    if (isPlainObject(value)) {
+      Object.keys(value).forEach(key => {
+        if (/^__/.test(key)) {
+          delete value[key]
+        }
+      })
+    }
+  })
+}
+
 module.exports = {
-  createFormulaImage
+  createFormulaImage,
+  cloneUseful
 }

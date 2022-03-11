@@ -11,7 +11,7 @@ const symbols = [
 
 symbols.forEach(o => {
   const filePath = resolve(__dirname, `${o.name}`)
-  if (!existsSync(filePath)) throw new Error(`${o.title}组没有对应的文件！`)
+  if (!existsSync(filePath)) throw new Error(`${o.title}组没有公式表达式文件！`)
   const list = readLines(filePath, true)
   o.elements = list.map(x => x.trim()).map(exp => ({
     exp
