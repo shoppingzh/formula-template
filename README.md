@@ -1,3 +1,25 @@
+## 下载与使用
+
+```bash
+yarn add formula-template
+# npm i formula-template
+```
+
+```js
+import config from 'formula-template/dist/config.json'
+import groupsSpriteImage from 'formula-template/dist/groups.png'
+import symbolsSpriteImage from 'formula-template/dist/symbols.png'
+```
+
+
+## 配置
+
+**Config**
+
+属性 | 说明 | 类型 | 可选值
+-- | -- | -- | --
+groups | 模板组 | Array\<Group\> | -
+symbols | 符号组 | Array\<Group\> | -
 
 **SpriteImage**
 
