@@ -1,6 +1,6 @@
 {
   "name": "formula-template",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "index.js",
   "files": [
     "dist"
@@ -11,12 +11,15 @@
   "repository": "git@github.com:shoppingzh/formula-template.git",
   "author": "shoppingzh <1049262057@qq.com>",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "mathjax": "^3.2.0",
     "sharp": "^0.30.2",
     "spritesmith": "^3.4.0",
     "vinyl": "^2.2.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   }
 }
