@@ -1,0 +1,7 @@
+{
+  "1": "\\sum _k^{ }\\left(_k^n\\right)",
+  "2": "\\sum _{i=0}^n",
+  "3": "\\sum _{_{0<j<n}^{0\\le i\\le m}}^{ }P\\left(i,j\\right)",
+  "4": "\\prod _{k=1}^nA_k",
+  "5": "\\bigcup _{n=1}^m\\left(X_n\\cap Y_n\\right)"
+}

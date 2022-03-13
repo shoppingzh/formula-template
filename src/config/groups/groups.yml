@@ -9,15 +9,22 @@
    - common-常用根式
 - int-积分:
    - base-积分
+   - perimeterpoints-围道积分
+   - differential-微分
 - big-大型运算符:
    - sum-求和
+   - prod-乘积和副积
+   - common-常用大型运算符
 - brackets-括号:
    - square-方括号
 - func-函数:
-   - triangle-三角函数
+   - trigonometric-三角函数
+   - inverse-反函数
+   - hyperbolic-双曲函数
+   - inversehyperbolic-反双曲函数
+   - common-常用函数
 - lim-极限和对数:
    - func-函数
    - common-常用函数
 - matrix-矩阵:
-   - blank-空矩阵
    - dot-点
